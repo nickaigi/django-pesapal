@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block css %}
+{% endblock%}
+{% block javascript %}
+{% endblock %}
+{% block title %} Home {% endblock %}
+{% block page-content %}
+    <div class="span7 offset2">
+        {% for jewel in jewels %}
+            <div class="jewel_item">
+                <div class="jewel_title">
+                </div>
+                <div class="jewel_image">
+                </div>
+                <div class="jewel_bottom">
+                    <div class="jewel_price">
+                    </div>
+                    <div class="btn_buy"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
