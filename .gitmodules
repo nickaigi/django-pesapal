@@ -1,0 +1,3 @@
+[submodule "python-pesapal"]
+	path = python-pesapal
+	url = git@github.com:nickaigi/python-pesapal.git
