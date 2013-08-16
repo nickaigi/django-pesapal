@@ -3,6 +3,6 @@ from core.views import *
 
 
 urlpatterns = patterns('',
-    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^$', home, name='home'),
     #url(r'paybills/$', 'kussd.views.paybill_numbers', name='paybills'),
 )
