@@ -2,3 +2,5 @@
 *.pyc
 # sqlite db
 django_pesapal/db/*
+# local_settings.py file
+django_pesapal/local_settings.py
