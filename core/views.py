@@ -2,27 +2,38 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
 
-def  home(request):
+products_db = MongoClient()['sasa']['products']
+def home(request):
     """
     Home page for django-pesapal example
     """
-    jewels = {}
-    products = MongoClient()['sasa']['products']
-    for product in products.find(limit=3):
-        jewel = { 
-                    'name': product['name'],
-                    'price': product['price'],
-                    'thumbnail': product['thumbnail'],
-                    'preview': product['preview']
-                }
-        jewels[product['product_id']] = jewel
-    return render_to_response('home.html', {'jewels': jewels}, context_instance=RequestContext(request))
+    products = []
+    for item in products_db.find(limit=3):
+       product = {
+                   'name': item['name'],
+                   'price': item['price'],
+                   'thumbnail': item['thumbnail'],
+                   'preview': item['preview'],
+                   'product_id': item['_id']
+               }
+       products.append(product)
+    return render_to_response('home.html', {'products': products}, context_instance=RequestContext(request))
 
 
-def products_page(request,_id):
+def buy(request,product_id):
     """
-    Dispalay product with _id = id
+    Buy product with _id = product_id
     """
-    pass
+    item = products_db.find_one({'_id': ObjectId(product_id)})
+    product = {
+                'name': item['name'],
+                'price': item['price'],
+                'thumbnail': item['thumbnail'],
+                'preview': item['preview'],
+                'product_id': item['_id']
+            }
+    return render_to_response('buy.html', {'product': product}, context_instance=RequestContext(request))
+

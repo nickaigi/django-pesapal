@@ -4,5 +4,5 @@ from core.views import *
 
 urlpatterns = patterns('',
     url(r'^$', home, name='home'),
-    #url(r'paybills/$', 'kussd.views.paybill_numbers', name='paybills'),
+    url(r'^buy/(?P<product_id>\w+)$', buy, name='buy'),
 )
