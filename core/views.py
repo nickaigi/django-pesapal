@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 import  pesapal
 from django_pesapal.settings import mongo_host, mongo_port
+from core.models import PesaPalRef
 
 products_db = MongoClient(mongo_host, mongo_port)['sasa']['products']
 def home(request):
@@ -64,4 +65,13 @@ def process_order(request):
     tracking_id = request.GET.get('pesapal_transaction_tracking_id', '')
     product_id = request.GET.get('pesapal_merchant_reference', '')
     #save this data to a model
+    errors = ''
+    if tracking_id and product_id:
+        p_ref = PesaPalRef(tracking_id=tracking_id, product_id=product_id)
+        p_ref.save()
+    else:
+        errors ='You broke our servers :-('
+    return render_to_response('process-order.html', {'errors': errors}, context_instance=RequestContext(request))
+
+    
 

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block css %}
+{% endblock%}
+{% block javascript %}
+{% endblock %}
+{% block title %} Process Order {% endblock %}
+{% block page-content %}
+    <div class="images_stream span7 offset2">
+        <div class="product_item">
+            {% if errors %}
+                <h1>{{ errors }}</h1>    
+            {% else %}
+                <div class="product_name">
+                    Thank you for shopping with us :-)
+                </div>
+            {% endif %}
+            
+    </div>
+{% endblock %}
