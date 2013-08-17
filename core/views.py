@@ -3,9 +3,10 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+#from python-pesapal.pesapal import PesaPal
+from django_pesapal.settings import mongo_host, mongo_port
 
-
-products_db = MongoClient()['sasa']['products']
+products_db = MongoClient(mongo_host, mongo_port)['sasa']['products']
 def home(request):
     """
     Home page for django-pesapal example
@@ -35,5 +36,7 @@ def buy(request,product_id):
                 'preview': item['preview'],
                 'product_id': item['_id']
             }
+    #pespal = PesaPal('uvzyNdMvjn6Ir4id+zwcUNT7bKOsp+wY','fXFK6owbt2B00Yq6JscpvKmDm6o=',True)
+
     return render_to_response('buy.html', {'product': product}, context_instance=RequestContext(request))
 
