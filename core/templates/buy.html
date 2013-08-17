@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block css %}
+{% endblock%}
+{% block javascript %}
+{% endblock %}
+{% block title %} Buy {{ product.name }} {% endblock %}
+{% block page-content %}
+    <div class="images_stream span7 offset2">
+        <div class="product_item">
+            <div class="product_name">
+                {{ product.name }}
+            </div>
+            <img src="{{ product.thumbnail}}" class="image-polaroid" style="height: 368px;">
+            <div class="product_bottom">
+                <div class="product_price">
+                    {{ product.price }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
