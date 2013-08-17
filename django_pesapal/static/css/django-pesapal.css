@@ -1,0 +1,40 @@
+/* bootstrap overiden classes*/
+.body{
+    background-image: url('../img/tweed.png');
+}
+
+.modal-footer{
+    padding: 10px;
+    text-align: center;
+}
+/*end bootstrap overiden classes*/
+
+.images_stream{
+    background-image: url('../img/cream_pixels.png');
+    padding: 10px;
+}
+
+.product_item{
+    background: #efefef;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px;
+}
+
+.product_name{
+    color: #317eac;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.product_price{
+    color: #ff0000;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.product_bottom{
+    margin-left: auto;
+    margin-right: auto;
