@@ -1,11 +1,12 @@
 # Create your views here.
+import urllib2
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import  pesapal
 from django_pesapal.settings import mongo_host, mongo_port
-from core.models import PesaPalRef
+from core.models import Pesapal
 
 products_db = MongoClient(mongo_host, mongo_port)['sasa']['products']
 def home(request):
@@ -67,8 +68,18 @@ def process_order(request):
     #save this data to a model
     errors = ''
     if tracking_id and product_id:
-        p_ref = PesaPalRef(tracking_id=tracking_id, product_id=product_id)
-        p_ref.save()
+        params = {
+                    'pesapal_merchant_reference': product_id,
+                    'pesapal_transaction_tracking_id': tracking_id
+                 }
+        client = pesapal.PesaPal('uvzyNdMvjn6Ir4id+zwcUNT7bKOsp+wY','fXFK6owbt2B00Yq6JscpvKmDm6o=',True)
+        request = client.queryPaymentStatus(params)
+        url = request.to_url()
+        print url
+        response = urllib2.urlopen(url)
+        print response.read()
+        #p_ref = Pesapal(tracking_id=tracking_id, product_id=product_id, status='', user='1')
+        #p_ref.save()
     else:
         errors ='You broke our servers :-('
     return render_to_response('process-order.html', {'errors': errors}, context_instance=RequestContext(request))
