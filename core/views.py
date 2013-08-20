@@ -78,7 +78,7 @@ def process_order(request):
         url = pesapal_request.to_url()
         print url
         pesapal_response = urllib2.urlopen(url)
-        pesapal_response_data = response.read()
+        pesapal_response_data = pesapal_response.read()
         print pesapal_response_data
         pesapal_status = pesapal_response_data.split('=')[1]
         if pesapal_status == 'COMPLETED':
