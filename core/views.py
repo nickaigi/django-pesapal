@@ -2,6 +2,7 @@
 import urllib2
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.contrib.auth.models import User
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import  pesapal
@@ -85,7 +86,7 @@ def process_order(request):
             msg = 'Transaction was successful'
         else:
             msg = 'Transaction status is %s'%(pesapal_status)
-        p_ref = Pesapal(tracking_id=tracking_id, product_id=product_id, status=pesapal_status, user='1')
+        p_ref = Pesapal(tracking_id=tracking_id, product_id=product_id, status=pesapal_status, user=User.objects.get(username='soko'))
         p_ref.save()
     else:
         errors ='You broke our servers :-('
