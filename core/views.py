@@ -67,22 +67,27 @@ def process_order(request):
     product_id = request.GET.get('pesapal_merchant_reference', '')
     #save this data to a model
     errors = ''
+    msg = ''
     if tracking_id and product_id:
         params = {
                     'pesapal_merchant_reference': product_id,
                     'pesapal_transaction_tracking_id': tracking_id
                  }
         client = pesapal.PesaPal('uvzyNdMvjn6Ir4id+zwcUNT7bKOsp+wY','fXFK6owbt2B00Yq6JscpvKmDm6o=',True)
-        request = client.queryPaymentStatus(params)
-        url = request.to_url()
+        pesapal_request = client.queryPaymentStatus(params)
+        url = pesapal_request.to_url()
         print url
-        response = urllib2.urlopen(url)
-        print response.read()
-        #p_ref = Pesapal(tracking_id=tracking_id, product_id=product_id, status='', user='1')
-        #p_ref.save()
+        pesapal_response = urllib2.urlopen(url)
+        pesapal_response_data = response.read()
+        print pesapal_response_data
+        pesapal_status = pesapal_response_data.split('=')[1]
+        if pesapal_status == 'COMPLETED':
+            msg = 'Transaction was successful'
+        else:
+            msg = 'Transaction status is %s'%(pesapal_status)
+        p_ref = Pesapal(tracking_id=tracking_id, product_id=product_id, status=pesapal_status, user='1')
+        p_ref.save()
     else:
         errors ='You broke our servers :-('
-    return render_to_response('process-order.html', {'errors': errors}, context_instance=RequestContext(request))
-
-    
+    return render_to_response('process-order.html', {'errors': errors, 'msg': msg}, context_instance=RequestContext(request))
 

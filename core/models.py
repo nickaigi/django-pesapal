@@ -7,15 +7,16 @@ class Pesapal(models.Model):
     """
     Model to hold pesapal callback info
     """
+    #<PENDING|COMPLETED|FAILED|INVALID>
     PESAPAL_STATUS_CHOICES = (
-                ('pending', 'Pending'),
-                ('completed', 'Completed'),
-                ('failed', 'Failed'),
-                ('invalid', 'Invalid'),
+                ('PENDING', 'Pending'),
+                ('COMPLETED', 'Completed'),
+                ('FAILED', 'Failed'),
+                ('INVALID', 'Invalid'),
             )
     tracking_id = models.CharField(max_length=50, verbose_name='Pesapal Transaction Tracking ID')
     product_id = models.CharField(max_length=50, verbose_name='Pesapal Merchant Reference')
-    status = models.CharField(max_length=9, choices=PESAPAL_STATUS_CHOICES, default='pending')
+    status = models.CharField(max_length=9, choices=PESAPAL_STATUS_CHOICES, default='PENDING')
     user = models.ForeignKey(User, verbose_name='Paid by')
 
 
