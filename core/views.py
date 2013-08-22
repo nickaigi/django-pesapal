@@ -1,5 +1,6 @@
 # Create your views here.
 import requests
+import datetime
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.models import User
@@ -39,33 +40,56 @@ def buy(request,product_id):
                 'preview': item['preview'],
                 'product_id': item['_id']
             }
-    client = pesapal.PesaPal('uvzyNdMvjn6Ir4id+zwcUNT7bKOsp+wY','fXFK6owbt2B00Yq6JscpvKmDm6o=',True)
-    request_data = {
-            'Amount': str(item['price']),
-            'Description': 'Buy %s from shopsoko '%(item['name']),
-            'Type': 'MERCHANT',
-            'Reference': item['product_id'],
-            'Email': 'info@shopsoko.com'
-            }
-    post_params = {
-            'oauth_callback': 'http://staging.shopsoko.com/pesapal/process-order'
-            }
-    pesapal_request = client.postDirectOrder(post_params, request_data)
+    
 
     return render_to_response('buy.html',
             {
                 'product': product,
-                'iframe_url': pesapal_request.to_url()
             },
             context_instance=RequestContext(request)
         )
+
+
+def checkout(request):
+    """
+    """
+    delivery_fee = 0 
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id', '')
+        cost = int(request.POST.get('cost', ''))
+        delivery_option = request.POST.get('delivery','')
+        if delivery_option == 'd':
+            delivery_fee = 300
+            total_cost = cost + delivery_fee 
+        else:
+            total_cost = cost
+
+        client = pesapal.PesaPal('uvzyNdMvjn6Ir4id+zwcUNT7bKOsp+wY','fXFK6owbt2B00Yq6JscpvKmDm6o=',True)
+        request_data = {
+            'Amount': str(total_cost),
+            'Description': 'Purchase of jewelry from shopsoko.com',
+            'Type': 'MERCHANT',
+            'Reference': str(datetime.datetime.now()),
+            'Email': 'info@shopsoko.com'
+            }
+        post_params = {
+            'oauth_callback': 'http://staging.shopsoko.com/pesapal/process-order'
+            }
+        pesapal_request = client.postDirectOrder(post_params, request_data)
+        return render_to_response('checkout.html', {
+                'total_cost': total_cost,
+                'cost': cost,
+                'delivery_fee': delivery_fee,
+                'iframe_url': pesapal_request.to_url()
+                }, context_instance=RequestContext(request))
+
 
 def process_order(request):
     """
     Handle the callback from pesapal
     """
     tracking_id = request.GET.get('pesapal_transaction_tracking_id', '')
-    product_id = request.GET.get('pesapal_merchant_reference', '')
+    reference = request.GET.get('pesapal_merchant_reference', '')
     #save this data to a model
     errors = ''
     msg = ''
@@ -86,7 +110,7 @@ def process_order(request):
             msg = 'Transaction was successful'
         else:
             msg = 'Transaction status is %s'%(pesapal_status)
-        p_ref = Pesapal(tracking_id=tracking_id, product_id=product_id, status=pesapal_status, user=User.objects.get(username='soko'))
+        p_ref = Pesapal(tracking_id=tracking_id, reference=reference, status=pesapal_status)
         p_ref.save()
     else:
         errors ='You broke our servers :-('

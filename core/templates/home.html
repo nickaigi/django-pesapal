@@ -12,9 +12,11 @@
                     {{ product.name }}
                 </div>
                 <img src="{{ product.thumbnail}}" class="image-polaroid" style="height: 368px;">
+                <br />
+                <br />
                 <div class="product_bottom">
                     <div class="product_price">
-                        {{ product.price }}
+                        KES {{ product.price }}
                     </div>
                     <div class="btn_buy">
                         <a href="{% url 'pesapal:buy' product.product_id %}" class="btn btn-primary" >Buy</a>

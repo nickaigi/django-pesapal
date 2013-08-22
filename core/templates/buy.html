@@ -2,21 +2,73 @@
 {% block css %}
 {% endblock%}
 {% block javascript %}
+    $("input[type='radio']").change(function(){
+        if($(this).val()=="d"){
+            $("#location").show();
+        }
+        else{
+            $("#location").hide(); 
+        }
+    });
 {% endblock %}
 {% block title %} Buy {{ product.name }} {% endblock %}
 {% block page-content %}
     <div class="images_stream span7 offset2">
         <div class="product_item">
+            Pickup and delivery available. Our delivery fee is <span class="label label-info">KES.300.00</span> with a minimum order of <span class="label label-info">KES 1500.00</span>
+            <br />
+            <br />
             <div class="product_name">
                 {{ product.name }}
             </div>
+            <br />
+            <br />
             <img src="{{ product.thumbnail}}" class="image-polaroid" style="height: 368px;">
+            <br />
+            <br />
             <div class="product_bottom">
                 <div class="product_price">
-                    {{ product.price }}
+                    KES {{ product.price }}
                 </div>
             </div>
+            
         </div>
-        <iframe src="{{ iframe_url}}" width="100%" height="620px" scrolling="auto" frameBorder="0"> <p>Unable to load the payment page</p></iframe>
+        <form action="{% url  'pesapal:checkout' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
+            <input type="hidden" name="cost" value="{{ product.price }}"/>
+
+            <legend>Payment and Delivery</legend>
+            <fieldset>
+                <h4>Delivery option</h4>
+                <p>
+                    Shopsoko allows orders for both pickup and delivery. Please select one of the options below:
+                </p>
+                <div class="control-group">
+                    <div class="controls">
+                        <label class="radio">
+                            <input type="radio" name="delivery" value="d" >
+                            I want my order Deliverd to me
+                        </label>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <label class="radio">
+                            <input type="radio" name="delivery" value="p" >
+                                I want to Pickup my order from Soko Office
+                        </label>
+                    <div>
+                </div>
+                <input type="text" style="display: none;" class="input-xxlarge" name="location" id="location" placeholder="Please provide your location details" />
+        
+
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="submit" value="Submit" class="btn btn-success" />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
     </div>
 {% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block css %}
+{% endblock%}
+{% block javascript %}
+{% endblock %}
+{% block title %} Buy {{ product.name }} {% endblock %}
+{% block page-content %}
+    <div class="images_stream span7 offset2">
+        <div class="product_item">
+            <table class="table table-bordered">
+                <tr>
+                    <td>Items total</td>
+                    <td> {{ cost }} </td>
+                </tr>
+                {% if delivery_fee %}
+                    <tr>
+                        <td>Deliver Fee</td>
+                        <td> 300</td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td>Sum Total</td>
+                    <td>{{ total_cost }}</td>
+                </tr>
+            </table>
+        </div>
+        <br />
+        <iframe src="{{ iframe_url}}" width="100%" height="620px" scrolling="auto" frameBorder="0"> <p>Unable to load the payment page</p></iframe>
+    </div>
+{% endblock %}

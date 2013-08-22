@@ -5,8 +5,8 @@ from django.contrib.auth.models import Group
 from core.models import Pesapal
 
 class PesapalAdmin(admin.ModelAdmin):
-    list_display = ('user','product_id', 'status',)
-    search_fields = ('product_id', 'user',)
+    list_display = ('reference', 'status',)
+    search_fields = ('reference', 'status',)
     list_filter = ('status', )
 
 admin.site.register(Pesapal, PesapalAdmin)
