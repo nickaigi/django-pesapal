@@ -56,7 +56,7 @@ def checkout(request):
     delivery_fee = 0 
     if request.method == 'POST':
         product_id = request.POST.get('product_id', '')
-        temp_cost = request.POST.get('',0)
+        temp_cost = request.POST.get('cost',0)
         cost = int(temp_cost.split('.')[0])
         delivery_option = request.POST.get('delivery','')
         if delivery_option == 'd':
