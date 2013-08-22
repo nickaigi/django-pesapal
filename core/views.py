@@ -1,5 +1,5 @@
 # Create your views here.
-import urllib2
+import requests
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.models import User
@@ -45,7 +45,7 @@ def buy(request,product_id):
             'Description': 'Buy %s from shopsoko '%(item['name']),
             'Type': 'MERCHANT',
             'Reference': item['product_id'],
-            'Email': 'nickaigi@gmail.com'
+            'Email': 'info@shopsoko.com'
             }
     post_params = {
             'oauth_callback': 'http://staging.shopsoko.com/pesapal/process-order'
@@ -78,8 +78,8 @@ def process_order(request):
         pesapal_request = client.queryPaymentStatus(params)
         url = pesapal_request.to_url()
         print url
-        pesapal_response = urllib2.urlopen(url)
-        pesapal_response_data = pesapal_response.read()
+        pesapal_response = requests.get(url)
+        pesapal_response_data = pesapal_response.text
         print pesapal_response_data
         pesapal_status = pesapal_response_data.split('=')[1]
         if pesapal_status == 'COMPLETED':
