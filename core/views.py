@@ -94,9 +94,9 @@ def process_order(request):
     #save this data to a model
     errors = ''
     msg = ''
-    if tracking_id and product_id:
+    if tracking_id and reference:
         params = {
-                    'pesapal_merchant_reference': product_id,
+                    'pesapal_merchant_reference': reference,
                     'pesapal_transaction_tracking_id': tracking_id
                  }
         client = pesapal.PesaPal('uvzyNdMvjn6Ir4id+zwcUNT7bKOsp+wY','fXFK6owbt2B00Yq6JscpvKmDm6o=',True)
