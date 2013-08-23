@@ -19,8 +19,8 @@ class TestPesapal(unittest.TestCase):
         client = self.client
 
         params = {
-          'pesapal_merchant_reference': 'KE0C60008',
-          'pesapal_transaction_tracking_id': '36c1355e-3c5d-4d55-97af-7c6584ef5d65'
+                'pesapal_merchant_reference': '2013-08-23 11:43:15.271915',
+                'pesapal_transaction_tracking_id': 'caa18bd2-c6ec-4d14-8d0e-85f25052d072'
         }
 
         pesapal_request = client.queryPaymentStatus(params)
@@ -33,7 +33,7 @@ class TestPesapal(unittest.TestCase):
         client = self.client
 
         params = {
-          'pesapal_merchant_reference': 'KE0C60008'
+                'pesapal_merchant_reference': '2013-08-23 11:43:15.271915'
         }
 
         pesapal_request = client.queryPaymentStatusByMerchantRef(params)
@@ -46,9 +46,10 @@ class TestPesapal(unittest.TestCase):
 
         client = self.client
 
+
         params = {
-          'pesapal_merchant_reference': 'KE0C60008',
-          'pesapal_transaction_tracking_id': '36c1355e-3c5d-4d55-97af-7c6584ef5d65'
+                'pesapal_merchant_reference': '2013-08-23 11:43:15.271915',
+                'pesapal_transaction_tracking_id': 'caa18bd2-c6ec-4d14-8d0e-85f25052d072'
         }
 
         pesapal_request = client.queryPaymentDetails(params)
