@@ -15,9 +15,6 @@
 {% block page-content %}
     <div class="images_stream span7 offset2">
         <div class="product_item">
-            Pickup and delivery available. Our delivery fee is <span class="label label-info">KES.300.00</span> with a minimum order of <span class="label label-info">KES 1500.00</span>
-            <br />
-            <br />
             <div class="product_name">
                 {{ product.name }}
             </div>
@@ -39,6 +36,11 @@
             <input type="hidden" name="cost" value="{{ product.price }}"/>
 
             <legend>Payment and Delivery</legend>
+            <br />
+            Pickup and delivery available. Our delivery fee is <span class="label label-info">KES.300.00</span> with a minimum order of <span class="label label-info">KES 1500.00</span>
+            <br />
+            <br />
+
             <fieldset>
                 <h4>Delivery option</h4>
                 <p>
@@ -48,20 +50,22 @@
                     <div class="controls">
                         <label class="radio">
                             <input type="radio" name="delivery" value="d" >
-                            I want my order Deliverd to me
+                            I want my order Delivered to me
                         </label>
+                        <br />
+                        <input type="text" style="display: none;" class="input-xxlarge" name="location" id="location" placeholder="Please provide your location details" />
+
                     </div>
                 </div>
                 <div class="control-group">
                     <div class="controls">
                         <label class="radio">
                             <input type="radio" name="delivery" value="p" >
-                                I want to Pickup my order from Soko Office
+                                I want to Pickup my order from the Soko Office ( 707 Muchai drive, off Ngong Road )
                         </label>
                     <div>
                 </div>
-                <input type="text" style="display: none;" class="input-xxlarge" name="location" id="location" placeholder="Please provide your location details" />
-        
+                        
 
                 <div class="control-group">
                     <div class="controls">

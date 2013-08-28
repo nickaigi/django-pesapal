@@ -10,17 +10,22 @@
             <table class="table table-bordered">
                 <tr>
                     <td>Items total</td>
-                    <td> {{ cost }} </td>
+                    <td> KES {{ cost }} </td>
                 </tr>
                 {% if delivery_fee %}
                     <tr>
                         <td>Deliver Fee</td>
-                        <td> 300</td>
+                        <td> KES 300</td>
                     </tr>
+                {% else %}
+                    <tr>
+                        <td>Deliver Fee</td>
+                        <td> KES 0</td>
+                    </tr>    
                 {% endif %}
                 <tr>
                     <td>Sum Total</td>
-                    <td>{{ total_cost }}</td>
+                    <td> KES {{ total_cost }} </td>
                 </tr>
             </table>
         </div>
